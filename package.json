@@ -1,6 +1,6 @@
 {
-  "name": "antd",
-  "version": "3.26.3",
+  "name": "@gsaandy/antd",
+  "version": "3.26.5",
   "description": "An enterprise-class UI design language and React components implementation",
   "keywords": [
     "ant",
@@ -62,7 +62,6 @@
     "lint:script": "eslint . --ext '.js,.jsx,.ts,.tsx'",
     "lint:style": "stylelint '{site,components}/**/*.less' --syntax less",
     "lint:tsc": "npm run tsc",
-    "pre-publish": "npm run check-commit && npm run test-all",
     "prettier": "prettier -c --write '**/*'",
     "pretty-quick": "pretty-quick",
     "pub": "antd-tools run pub",
