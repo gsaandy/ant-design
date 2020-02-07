@@ -5,6 +5,7 @@ import Form from '../../form';
 import Input from '..';
 import focusTest from '../../../tests/shared/focusTest';
 import mountTest from '../../../tests/shared/mountTest';
+import rtlTest from '../../../tests/shared/rtlTest';
 import calculateNodeHeight, { calculateNodeStyling } from '../calculateNodeHeight';
 
 const { TextArea } = Input;
@@ -23,6 +24,9 @@ describe('Input', () => {
   focusTest(Input);
   mountTest(Input);
   mountTest(Input.Group);
+
+  rtlTest(Input);
+  rtlTest(Input.Group);
 
   it('should support maxLength', () => {
     const wrapper = mount(<Input maxLength={3} />);
@@ -47,7 +51,7 @@ describe('Input', () => {
       expect(errorSpy).not.toHaveBeenCalled();
     });
     it('trigger warning', () => {
-      const wrapper = mount(<Input />);
+      const wrapper = mount(<Input />, { attachTo: document.body });
       wrapper
         .find('input')
         .instance()
@@ -58,6 +62,7 @@ describe('Input', () => {
       expect(errorSpy).toHaveBeenCalledWith(
         'Warning: [antd: Input] When Input is focused, dynamic add or remove prefix / suffix will make it lose focus caused by dom structure change. Read more: https://ant.design/components/input/#FAQ',
       );
+      wrapper.unmount();
     });
   });
 });
@@ -176,33 +181,57 @@ describe('TextArea', () => {
     expect(onPressEnter).toHaveBeenCalled();
     expect(onKeyDown).toHaveBeenCalled();
   });
+
+  it('should trigger onResize', () => {
+    const onResize = jest.fn();
+    const wrapper = mount(<TextArea onResize={onResize} autosize />);
+
+    wrapper
+      .find('ResizeObserver')
+      .instance()
+      .onResize([
+        {
+          target: {
+            getBoundingClientRect() {
+              return {};
+            },
+          },
+        },
+      ]);
+
+    expect(onResize).toHaveBeenCalledWith(
+      expect.objectContaining({
+        width: expect.any(Number),
+        height: expect.any(Number),
+      }),
+    );
+  });
 });
 
 describe('As Form Control', () => {
   it('should be reset when wrapped in form.getFieldDecorator without initialValue', () => {
-    class Demo extends React.Component {
-      reset = () => {
-        const { form } = this.props;
+    const Demo = () => {
+      const [form] = Form.useForm();
+      const reset = () => {
         form.resetFields();
       };
 
-      render() {
-        const {
-          form: { getFieldDecorator },
-        } = this.props;
-        return (
-          <Form>
-            <Form.Item>{getFieldDecorator('input')(<Input />)}</Form.Item>
-            <Form.Item>{getFieldDecorator('textarea')(<Input.TextArea />)}</Form.Item>
-            <button type="button" onClick={this.reset}>
-              reset
-            </button>
-          </Form>
-        );
-      }
-    }
-    const DemoForm = Form.create()(Demo);
-    const wrapper = mount(<DemoForm />);
+      return (
+        <Form form={form}>
+          <Form.Item name="input">
+            <Input />
+          </Form.Item>
+          <Form.Item name="textarea">
+            <Input.TextArea />
+          </Form.Item>
+          <button type="button" onClick={reset}>
+            reset
+          </button>
+        </Form>
+      );
+    };
+
+    const wrapper = mount(<Demo />);
     wrapper.find('input').simulate('change', { target: { value: '111' } });
     wrapper.find('textarea').simulate('change', { target: { value: '222' } });
     expect(wrapper.find('input').prop('value')).toBe('111');
@@ -299,7 +328,7 @@ describe('Input allowClear', () => {
   });
 
   it('should focus input after clear', () => {
-    const wrapper = mount(<Input allowClear defaultValue="111" />);
+    const wrapper = mount(<Input allowClear defaultValue="111" />, { attachTo: document.body });
     wrapper
       .find('.ant-input-clear-icon')
       .at(0)
@@ -310,6 +339,7 @@ describe('Input allowClear', () => {
         .at(0)
         .getDOMNode(),
     );
+    wrapper.unmount();
   });
 
   it('should not support allowClear when it is disabled', () => {
@@ -397,7 +427,7 @@ describe('TextArea allowClear', () => {
   });
 
   it('should focus textarea after clear', () => {
-    const wrapper = mount(<TextArea allowClear defaultValue="111" />);
+    const wrapper = mount(<TextArea allowClear defaultValue="111" />, { attachTo: document.body });
     wrapper
       .find('.ant-input-textarea-clear-icon')
       .at(0)
@@ -408,10 +438,22 @@ describe('TextArea allowClear', () => {
         .at(0)
         .getDOMNode(),
     );
+    wrapper.unmount();
   });
 
   it('should not support allowClear when it is disabled', () => {
     const wrapper = mount(<TextArea allowClear defaultValue="111" disabled />);
     expect(wrapper.find('.ant-input-textarea-clear-icon').length).toBe(0);
+  });
+
+  it('not block input when `value` is undefined', () => {
+    const wrapper = mount(<Input value={undefined} />);
+    wrapper.find('input').simulate('change', { target: { value: 'Bamboo' } });
+    expect(wrapper.find('input').props().value).toEqual('Bamboo');
+
+    // Controlled
+    wrapper.setProps({ value: 'Light' });
+    wrapper.find('input').simulate('change', { target: { value: 'Bamboo' } });
+    expect(wrapper.find('input').props().value).toEqual('Light');
   });
 });
