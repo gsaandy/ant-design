@@ -1,5 +1,5 @@
 {
-  "name": "antd",
+  "name": "@gsaandy/antd",
   "version": "4.0.0-rc.3",
   "description": "An enterprise-class UI design language and React components implementation",
   "keywords": [
@@ -61,8 +61,7 @@
     "lint:md": "remark components/",
     "lint:script": "eslint . --ext '.js,.jsx,.ts,.tsx'",
     "lint:style": "stylelint '{site,components}/**/*.less' --syntax less",
-    "lint:tsc": "npm run tsc",
-    "pre-publish": "npm run check-commit && npm run test-all",
+    "lint:tsc": "npm run tsc",    
     "prettier": "prettier -c --write '**/*'",
     "pretty-quick": "pretty-quick",
     "pub": "antd-tools run pub",
