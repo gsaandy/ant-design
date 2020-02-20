@@ -69,6 +69,7 @@ Select component to select value from options.
 | open | Controlled open state of dropdown | boolean | - |  |
 | onDropdownVisibleChange | Call when dropdown open | function(open) | - |  |
 | loading | indicate loading state | Boolean | false |  |
+| bordered | whether has border style | Boolean | true |  |
 
 ### Select Methods
 
@@ -99,3 +100,13 @@ Select component to select value from options.
 ### The dropdown is closed when click `dropdownRender` area?
 
 See the [dropdownRender example](/components/select/#components-select-demo-custom-dropdown-menu).
+
+### Why sometime customize Option cause scroll break?
+
+Virtual scroll internal set item height as `32px`. You need to adjust `listItemHeight` when your option height is less and `listHeight` config list container height:
+
+```tsx
+<Select listItemHeight={10} listHeight={250} />
+```
+
+Note: `listItemHeight` and `listHeight` are internal props. Please only modify when necessary.

@@ -347,7 +347,7 @@
   ) / 10 - @border-width-base;
 @input-padding-vertical-sm: round((@input-height-sm - @font-size-base * @line-height-base) / 2 * 10) /
   10 - @border-width-base;
-@input-padding-vertical-lg: round((@input-height-lg - @font-size-lg * @line-height-base) / 2 * 10) /
+@input-padding-vertical-lg: ceil((@input-height-lg - @font-size-lg * @line-height-base) / 2 * 10) /
   10 - @border-width-base;
 @input-placeholder-color: hsv(0, 0, 75%);
 @input-color: @text-color;
@@ -511,7 +511,7 @@
 @table-border-radius-base: @border-radius-base;
 @table-footer-bg: @background-color-light;
 @table-footer-color: @heading-color;
-@table-header-bg-sm: transparent;
+@table-header-bg-sm: @table-bg;
 // Sorter
 // Legacy: `table-header-sort-active-bg` is used for hover not real active
 @table-header-sort-active-bg: darken(@table-header-bg, 3%);

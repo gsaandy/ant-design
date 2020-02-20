@@ -18,6 +18,7 @@ Tree selection control.
 | --- | --- | --- | --- | --- |
 | allowClear | Whether allow clear | boolean | false |  |
 | autoClearSearchValue | auto clear search input value when multiple select is selected/deselected | boolean | true |  |
+| bordered | whether has border style | boolean | true |  |
 | defaultValue | To set the initial selected treeNode(s). | string\|string\[] | - |  |
 | disabled | Disabled or not | boolean | false |  |
 | dropdownClassName | className of dropdown menu | string | - |  |
@@ -80,3 +81,7 @@ Tree selection control.
 ### How to get parent node in onChange?
 
 We don't provide this since performance consideration. You can get by this way: <https://codesandbox.io/s/wk080nn81k>
+
+### Why sometime customize Option cause scroll break?
+
+You can ref Select [FAQ](/components/select).
