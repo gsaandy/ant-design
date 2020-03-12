@@ -59,12 +59,13 @@ The following APIs are shared by DatePicker, YearPicker, MonthPicker, RangePicke
 | picker | Set picker type | `date` \| `week` \| `month` \| `year` | `date` |  |
 | placeholder | placeholder of date input | string\|RangePicker\[] | - |  |
 | popupStyle | to customize the style of the popup calendar | object | {} |  |
-| size | determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | string | - |  |
+| size | determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | `large` \| `middle` \| `small` | - |  |
 | bordered | whether has border style | Boolean | true |  |
 | suffixIcon | The custom suffix icon | ReactNode | - |  |
 | style | to customize the style of the input box | object | {} |  |
 | onOpenChange | a callback function, can be executed whether the popup calendar is popped up or closed | function(status) | - |  |
 | onPanelChange | callback when picker panel mode is changed | function(value, mode) | - |  |
+| inputReadOnly | Set the `readonly` attribute of the input tag (avoids virtual keyboard on touch devices) | boolean | false |  |
 
 ### Common Methods
 

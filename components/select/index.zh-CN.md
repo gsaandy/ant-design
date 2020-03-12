@@ -50,7 +50,7 @@ title: Select
 | placeholder | 选择框默认文字 | string | - |  |
 | showArrow | 是否显示下拉小箭头 | boolean | true |  |
 | showSearch | 使单选模式可搜索 | boolean | false |  |
-| size | 选择框大小，可选 `large` `small` | string | default |  |
+| size | 选择框大小 | `large` \| `middle` \| `small` | 无 |  |
 | suffixIcon | 自定义的选择框后缀图标 | ReactNode | - |  |
 | removeIcon | 自定义的多选框清除图标 | ReactNode | - |  |
 | clearIcon | 自定义的多选框清空图标 | ReactNode | - |  |
@@ -84,13 +84,12 @@ title: Select
 
 ### Option props
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| disabled | 是否禁用 | boolean | false |  |
-| key | 和 value 含义一致。如果 React 需要你设置此项，此项值与 value 的值相同，然后可以省略 value 设置 | string |  |  |
-| title | 选中该 Option 后，Select 的 title | string | - |  |
-| value | 默认根据此属性值进行筛选 | string\|number | - |  |
-| className | Option 器类名 | string | - |  |
+| 参数      | 说明                              | 类型           | 默认值 | 版本 |
+| --------- | --------------------------------- | -------------- | ------ | ---- |
+| disabled  | 是否禁用                          | boolean        | false  |      |
+| title     | 选中该 Option 后，Select 的 title | string         | -      |      |
+| value     | 默认根据此属性值进行筛选          | string\|number | -      |      |
+| className | Option 器类名                     | string         | -      |      |
 
 ### OptGroup props
 

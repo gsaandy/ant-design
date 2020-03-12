@@ -17,10 +17,24 @@ import { toArray, getFieldId } from './util';
 const ValidateStatuses = tuple('success', 'warning', 'error', 'validating', '');
 export type ValidateStatus = typeof ValidateStatuses[number];
 
-type RenderChildren = (form: FormInstance) => React.ReactElement;
+type RenderChildren = (form: FormInstance) => React.ReactNode;
 type RcFieldProps = Omit<FieldProps, 'children'>;
 type ChildrenType = React.ReactElement | RenderChildren | React.ReactElement[] | null;
-type ChildrenNodeType = Exclude<ChildrenType, RenderChildren>;
+
+interface MemoInputProps {
+  value: any;
+  update: number;
+  children: any;
+}
+
+const MemoInput = React.memo<MemoInputProps>(
+  ({ children }) => {
+    return children;
+  },
+  (prev, next) => {
+    return prev.value === next.value && prev.update === next.update;
+  },
+);
 
 export interface FormItemProps
   extends FormItemLabelProps,
@@ -67,11 +81,23 @@ function FormItem(props: FormItemProps): React.ReactElement {
     validateTrigger = 'onChange',
     ...restProps
   } = props;
+  const destroyRef = React.useRef(false);
   const { getPrefixCls } = React.useContext(ConfigContext);
   const formContext = React.useContext(FormContext);
   const { updateItemErrors } = React.useContext(FormItemContext);
-  const [domErrorVisible, setDomErrorVisible] = React.useState(!!help);
-  const [inlineErrors, setInlineErrors] = React.useState<Record<string, string[]>>({});
+  const [domErrorVisible, innerSetDomErrorVisible] = React.useState(!!help);
+  const [inlineErrors, innerSetInlineErrors] = React.useState<Record<string, string[]>>({});
+
+  function setDomErrorVisible(visible: boolean) {
+    if (!destroyRef.current) {
+      innerSetDomErrorVisible(visible);
+    }
+  }
+  function setInlineErrors(errors: Record<string, string[]>) {
+    if (!destroyRef.current) {
+      innerSetInlineErrors(errors);
+    }
+  }
 
   const { name: formName } = formContext;
   const hasName = hasValidName(name);
@@ -82,6 +108,7 @@ function FormItem(props: FormItemProps): React.ReactElement {
   // Should clean up if Field removed
   React.useEffect(() => {
     return () => {
+      destroyRef.current = true;
       updateItemErrors(nameRef.current.join('__SPLIT__'), []);
     };
   }, []);
@@ -94,15 +121,17 @@ function FormItem(props: FormItemProps): React.ReactElement {
     ? updateItemErrors
     : (subName: string, subErrors: string[]) => {
         if (!isEqual(inlineErrors[subName], subErrors)) {
-          setInlineErrors({
-            ...inlineErrors,
-            [subName]: subErrors,
+          Promise.resolve().then(() => {
+            setInlineErrors({
+              ...inlineErrors,
+              [subName]: subErrors,
+            });
           });
         }
       };
 
   function renderLayout(
-    baseChildren: ChildrenNodeType,
+    baseChildren: React.ReactNode,
     fieldId?: string,
     meta?: Meta,
     isRequired?: boolean,
@@ -198,8 +227,12 @@ function FormItem(props: FormItemProps): React.ReactElement {
 
   const isRenderProps = typeof children === 'function';
 
+  // Record for real component render
+  const updateRef = React.useRef(0);
+  updateRef.current += 1;
+
   if (!hasName && !isRenderProps && !dependencies) {
-    return renderLayout(children as ChildrenNodeType);
+    return renderLayout(children);
   }
 
   return (
@@ -248,7 +281,7 @@ function FormItem(props: FormItemProps): React.ReactElement {
           id: fieldId,
         };
 
-        let childNode: ChildrenNodeType = null;
+        let childNode: React.ReactNode = null;
         if (Array.isArray(children) && hasName) {
           warning(false, 'Form.Item', '`children` is array of render props cannot have `name`.');
           childNode = children;
@@ -273,10 +306,7 @@ function FormItem(props: FormItemProps): React.ReactElement {
           const childProps = { ...children.props, ...mergedControl };
 
           // We should keep user origin event handler
-          const triggers = new Set<string>();
-          [...toArray(trigger), ...toArray(validateTrigger)].forEach(eventName => {
-            triggers.add(eventName);
-          });
+          const triggers = new Set<string>([...toArray(trigger), ...toArray(validateTrigger)]);
 
           triggers.forEach(eventName => {
             childProps[eventName] = (...args: any[]) => {
@@ -285,7 +315,14 @@ function FormItem(props: FormItemProps): React.ReactElement {
             };
           });
 
-          childNode = React.cloneElement(children, childProps);
+          childNode = (
+            <MemoInput
+              value={mergedControl[props.valuePropName || 'value']}
+              update={updateRef.current}
+            >
+              {React.cloneElement(children, childProps)}
+            </MemoInput>
+          );
         } else if (isRenderProps && shouldUpdate && !hasName) {
           childNode = (children as RenderChildren)(context);
         } else {

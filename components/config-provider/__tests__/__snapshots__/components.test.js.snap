@@ -5847,6 +5847,7 @@ exports[`ConfigProvider components DatePicker DatePicker configProvider 1`] = `
         placeholder="Select date"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -5890,6 +5891,7 @@ exports[`ConfigProvider components DatePicker DatePicker normal 1`] = `
         placeholder="Select date"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -5933,6 +5935,7 @@ exports[`ConfigProvider components DatePicker DatePicker prefixCls 1`] = `
         placeholder="Select date"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -5976,6 +5979,7 @@ exports[`ConfigProvider components DatePicker MonthPicker configProvider 1`] = `
         placeholder="Select month"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -6019,6 +6023,7 @@ exports[`ConfigProvider components DatePicker MonthPicker normal 1`] = `
         placeholder="Select month"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -6062,6 +6067,7 @@ exports[`ConfigProvider components DatePicker MonthPicker prefixCls 1`] = `
         placeholder="Select month"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -6303,6 +6309,7 @@ exports[`ConfigProvider components DatePicker WeekPicker configProvider 1`] = `
         placeholder="Select week"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -6346,6 +6353,7 @@ exports[`ConfigProvider components DatePicker WeekPicker normal 1`] = `
         placeholder="Select week"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -6389,6 +6397,7 @@ exports[`ConfigProvider components DatePicker WeekPicker prefixCls 1`] = `
         placeholder="Select week"
         readonly=""
         size="12"
+        title=""
         value=""
       />
       <span
@@ -7146,6 +7155,44 @@ exports[`ConfigProvider components Input configProvider 1`] = `
       </span>
     </span>
   </span>
+  <span
+    class="config-input-password config-input-affix-wrapper"
+  >
+    <input
+      action="click"
+      class="config-input"
+      type="password"
+      value=""
+    />
+    <span
+      class="config-input-suffix"
+    >
+      <span
+        aria-label="eye-invisible"
+        class="anticon anticon-eye-invisible config-input-password-icon"
+        role="img"
+        tabindex="-1"
+      >
+        <svg
+          aria-hidden="true"
+          class=""
+          data-icon="eye-invisible"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z"
+          />
+          <path
+            d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z"
+          />
+        </svg>
+      </span>
+    </span>
+  </span>
   <textarea
     class="config-input"
   />
@@ -7197,6 +7244,44 @@ exports[`ConfigProvider components Input normal 1`] = `
       </span>
     </span>
   </span>
+  <span
+    class="ant-input-password ant-input-affix-wrapper"
+  >
+    <input
+      action="click"
+      class="ant-input"
+      type="password"
+      value=""
+    />
+    <span
+      class="ant-input-suffix"
+    >
+      <span
+        aria-label="eye-invisible"
+        class="anticon anticon-eye-invisible ant-input-password-icon"
+        role="img"
+        tabindex="-1"
+      >
+        <svg
+          aria-hidden="true"
+          class=""
+          data-icon="eye-invisible"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z"
+          />
+          <path
+            d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z"
+          />
+        </svg>
+      </span>
+    </span>
+  </span>
   <textarea
     class="ant-input"
   />
@@ -7245,6 +7330,44 @@ exports[`ConfigProvider components Input prefixCls 1`] = `
             />
           </svg>
         </span>
+      </span>
+    </span>
+  </span>
+  <span
+    class="prefix-Input ant-input-affix-wrapper"
+  >
+    <input
+      action="click"
+      class="ant-input"
+      type="password"
+      value=""
+    />
+    <span
+      class="ant-input-suffix"
+    >
+      <span
+        aria-label="eye-invisible"
+        class="anticon anticon-eye-invisible prefix-Input-icon"
+        role="img"
+        tabindex="-1"
+      >
+        <svg
+          aria-hidden="true"
+          class=""
+          data-icon="eye-invisible"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z"
+          />
+          <path
+            d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z"
+          />
+        </svg>
       </span>
     </span>
   </span>
@@ -7775,7 +7898,7 @@ exports[`ConfigProvider components Menu configProvider 1`] = `
           class="config-menu-item-group-list"
         >
           <li
-            class="config-menu-item"
+            class="config-menu-item config-menu-item-only-child"
             role="menuitem"
             style="padding-left:48px"
           >
@@ -7829,7 +7952,7 @@ exports[`ConfigProvider components Menu normal 1`] = `
           class="ant-menu-item-group-list"
         >
           <li
-            class="ant-menu-item"
+            class="ant-menu-item ant-menu-item-only-child"
             role="menuitem"
             style="padding-left:48px"
           >
@@ -7883,7 +8006,7 @@ exports[`ConfigProvider components Menu prefixCls 1`] = `
           class="prefix-Menu-item-group-list"
         >
           <li
-            class="prefix-Menu-item"
+            class="prefix-Menu-item prefix-Menu-item-only-child"
             role="menuitem"
             style="padding-left:48px"
           >
@@ -11641,11 +11764,11 @@ exports[`ConfigProvider components Table configProvider 1`] = `
                               class="config-table-filter-dropdown"
                             >
                               <ul
-                                class="ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical"
+                                class="config-dropdown-menu config-dropdown-menu-light config-dropdown-menu-root config-dropdown-menu-vertical"
                                 role="menu"
                               >
                                 <li
-                                  class="ant-dropdown-menu-item"
+                                  class="config-dropdown-menu-item"
                                   role="menuitem"
                                 >
                                   <label
@@ -11668,19 +11791,19 @@ exports[`ConfigProvider components Table configProvider 1`] = `
                                   </span>
                                 </li>
                                 <li
-                                  class="ant-dropdown-menu-submenu ant-dropdown-menu-submenu-vertical"
+                                  class="config-dropdown-menu-submenu config-dropdown-menu-submenu-vertical"
                                   role="menuitem"
                                 >
                                   <div
                                     aria-expanded="false"
                                     aria-haspopup="true"
-                                    class="ant-dropdown-menu-submenu-title"
+                                    class="config-dropdown-menu-submenu-title"
                                     role="button"
                                     title="Submenu"
                                   >
                                     Submenu
                                     <i
-                                      class="ant-dropdown-menu-submenu-arrow"
+                                      class="config-dropdown-menu-submenu-arrow"
                                     />
                                   </div>
                                 </li>
@@ -12978,6 +13101,7 @@ Array [
         placeholder="Select time"
         readonly=""
         size="10"
+        title=""
         value=""
       />
       <span
@@ -14388,6 +14512,7 @@ Array [
         placeholder="Select time"
         readonly=""
         size="10"
+        title=""
         value=""
       />
       <span
@@ -15798,6 +15923,7 @@ Array [
         placeholder="Select time"
         readonly=""
         size="10"
+        title=""
         value=""
       />
       <span

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import omit from 'omit.js';
 import RcTable from 'rc-table';
 import { TableProps as RcTableProps, INTERNAL_HOOKS } from 'rc-table/lib/Table';
 import Spin, { SpinProps } from '../spin';
@@ -54,13 +55,7 @@ interface ChangeEventInfo<RecordType> {
 export interface TableProps<RecordType>
   extends Omit<
     RcTableProps<RecordType>,
-    | 'transformColumns'
-    | 'internalHooks'
-    | 'internalRefs'
-    | 'data'
-    | 'columns'
-    | 'expandIconColumnIndex'
-    | 'scroll'
+    'transformColumns' | 'internalHooks' | 'internalRefs' | 'data' | 'columns' | 'scroll'
   > {
   dropdownPrefixCls?: string;
   dataSource?: RcTableProps<RecordType>['data'];
@@ -90,37 +85,49 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
   const {
     prefixCls: customizePrefixCls,
     className,
+    style,
     size: customizeSize,
     bordered,
-    dropdownPrefixCls,
+    dropdownPrefixCls: customizeDropdownPrefixCls,
     dataSource,
     pagination,
     rowSelection,
     rowKey,
     rowClassName,
     columns,
+    children,
     onChange,
     getPopupContainer,
     loading,
     expandIcon,
     expandable,
     expandedRowRender,
+    expandIconColumnIndex,
     indentSize,
     childrenColumnName = 'children',
     scroll,
     sortDirections,
     locale,
   } = props;
+
+  const tableProps = omit(props, ['className', 'style']) as TableProps<RecordType>;
+
   const size = React.useContext(SizeContext);
   const { locale: contextLocale = defaultLocale, renderEmpty, direction } = React.useContext(
     ConfigContext,
   );
   const mergedSize = customizeSize || size;
-  const tableLocale = locale || contextLocale.Table;
+  const tableLocale = { ...contextLocale.Table, ...locale } as TableLocale;
   const rawData: RecordType[] = dataSource || EMPTY_LIST;
 
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('table', customizePrefixCls);
+  const dropdownPrefixCls = getPrefixCls('dropdown', customizeDropdownPrefixCls);
+
+  const mergedExpandable: ExpandableConfig<RecordType> = {
+    expandIconColumnIndex,
+    ...expandable,
+  };
 
   const expandType: ExpandType = React.useMemo<ExpandType>(() => {
     if (rawData.some(item => (item as any)[childrenColumnName])) {
@@ -211,7 +218,8 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
 
   const [transformSorterColumns, sortStates, sorterTitleProps, getSorters] = useSorter<RecordType>({
     prefixCls,
-    columns: columns || [],
+    columns,
+    children,
     onSorterChange,
     sortDirections: sortDirections || ['ascend', 'descend'],
   });
@@ -239,6 +247,7 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
 
   const [transformFilterColumns, filterStates, getFilters] = useFilter<RecordType>({
     prefixCls,
+    locale: tableLocale,
     dropdownPrefixCls,
     columns: columns || [],
     onFilterChange,
@@ -306,6 +315,8 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
     getRecordByKey,
     expandType,
     childrenColumnName,
+    locale: tableLocale,
+    expandIconColumnIndex: mergedExpandable.expandIconColumnIndex,
   });
 
   const internalRowClassName = (record: RecordType, index: number, indent: number) => {
@@ -325,9 +336,6 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
   };
 
   // ========================== Expandable ==========================
-  const mergedExpandable: ExpandableConfig<RecordType> = {
-    ...expandable,
-  };
 
   // Pass origin render status into `rc-table`, this can be removed when refactor with `rc-table`
   (mergedExpandable as any).__PARENT_RENDER_ICON__ = mergedExpandable.expandIcon;
@@ -337,8 +345,10 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
     mergedExpandable.expandIcon || expandIcon || renderExpandIcon(tableLocale!);
 
   // Adjust expand icon index, no overwrite expandIconColumnIndex if set.
-  if (expandType === 'nest' && !('expandIconColumnIndex' in mergedExpandable)) {
+  if (expandType === 'nest' && mergedExpandable.expandIconColumnIndex === undefined) {
     mergedExpandable.expandIconColumnIndex = rowSelection ? 1 : 0;
+  } else if (mergedExpandable.expandIconColumnIndex! > 0 && rowSelection) {
+    mergedExpandable.expandIconColumnIndex! -= 1;
   }
 
   // Indent size
@@ -397,12 +407,13 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
     spinProps = loading;
   }
 
-  const wrapperClassNames = classNames(`${prefixCls}-wrapper`, {
+  const wrapperClassNames = classNames(`${prefixCls}-wrapper`, className, {
     [`${prefixCls}-wrapper-rtl`]: direction === 'rtl',
   });
   return (
     <div
       className={wrapperClassNames}
+      style={style}
       onTouchMove={e => {
         e.preventDefault();
       }}
@@ -410,14 +421,14 @@ function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
       <Spin spinning={false} {...spinProps}>
         {topPaginationNode}
         <RcTable<RecordType>
-          {...props}
+          {...tableProps}
+          direction={direction}
           expandable={mergedExpandable}
           prefixCls={prefixCls}
-          className={classNames(className, {
+          className={classNames({
             [`${prefixCls}-middle`]: mergedSize === 'middle',
             [`${prefixCls}-small`]: mergedSize === 'small',
             [`${prefixCls}-bordered`]: bordered,
-            [`${prefixCls}-rtl`]: direction === 'rtl',
           })}
           data={pageData}
           rowKey={getRowKey}

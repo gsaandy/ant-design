@@ -189,9 +189,15 @@
         }
 
         &-icon {
+          margin-right: 0 !important;
           color: @text-color-secondary;
           font-style: normal;
           .iconfont-size-under-12px(10px);
+
+          .@{dropdown-prefix-cls}-rtl & {
+            margin-left: 0 !important;
+            transform: scaleX(-1);
+          }
         }
       }
     }
@@ -203,11 +209,11 @@
     }
 
     &-submenu-title {
-      padding-right: 26px;
+      padding-right: @control-padding-horizontal + @font-size-sm;
 
       .@{dropdown-prefix-cls}-rtl & {
         padding-right: @control-padding-horizontal;
-        padding-left: 26px;
+        padding-left: @control-padding-horizontal + @font-size-sm;
       }
     }
 

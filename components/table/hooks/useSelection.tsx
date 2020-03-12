@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+import DownOutlined from '@ant-design/icons/DownOutlined';
 import { FixedType } from 'rc-table/lib/interface';
 import Checkbox, { CheckboxProps } from '../../checkbox';
 import Dropdown from '../../dropdown';
@@ -16,8 +16,6 @@ import {
   TransformColumns,
   ExpandType,
 } from '../interface';
-import { ConfigContext } from '../../config-provider';
-import defaultLocale from '../../locale/en_US';
 
 const EMPTY_LIST: any[] = [];
 
@@ -37,6 +35,8 @@ interface UseSelectionConfig<RecordType> {
   getRecordByKey: (key: Key) => RecordType;
   expandType: ExpandType;
   childrenColumnName: string;
+  expandIconColumnIndex?: number;
+  locale: TableLocale;
 }
 
 type INTERNAL_SELECTION_ITEM = SelectionItem | typeof SELECTION_ALL | typeof SELECTION_INVERT;
@@ -78,8 +78,6 @@ export default function useSelection<RecordType>(
     fixed,
   } = rowSelection || {};
 
-  const { locale = defaultLocale } = React.useContext(ConfigContext);
-  const tableLocale = (locale.Table || {}) as TableLocale;
   const {
     prefixCls,
     data,
@@ -88,6 +86,8 @@ export default function useSelection<RecordType>(
     getRowKey,
     expandType,
     childrenColumnName,
+    locale: tableLocale,
+    expandIconColumnIndex,
   } = config;
 
   const [innerSelectedKeys, setInnerSelectedKeys] = React.useState<Key[]>();
@@ -412,13 +412,13 @@ export default function useSelection<RecordType>(
         render: renderCell,
       };
 
-      if (expandType === 'row' && columns.length) {
+      if (expandType === 'row' && columns.length && !expandIconColumnIndex) {
         const [expandColumn, ...restColumns] = columns;
-        return [
-          expandColumn,
-          { ...selectionColumn, fixed: fixed || getFixedType(restColumns[0]) },
-          ...restColumns,
-        ];
+        const selectionFixed = fixed || getFixedType(restColumns[0]);
+        if (selectionFixed) {
+          expandColumn.fixed = selectionFixed;
+        }
+        return [expandColumn, { ...selectionColumn, fixed: selectionFixed }, ...restColumns];
       }
       return [{ ...selectionColumn, fixed: fixed || getFixedType(columns[0]) }, ...columns];
     },

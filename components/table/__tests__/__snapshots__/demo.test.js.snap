@@ -1460,7 +1460,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                 <tr
                   class="ant-table-row ant-table-row-level-0"
                   data-row-key="1"
-                  index="0"
                   style="cursor:move"
                 >
                   <td
@@ -1482,7 +1481,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                 <tr
                   class="ant-table-row ant-table-row-level-0"
                   data-row-key="2"
-                  index="1"
                   style="cursor:move"
                 >
                   <td
@@ -1504,7 +1502,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                 <tr
                   class="ant-table-row ant-table-row-level-0"
                   data-row-key="3"
-                  index="2"
                   style="cursor:move"
                 >
                   <td
@@ -4942,7 +4939,7 @@ exports[`renders ./components/table/demo/fixed-columns.md correctly 1`] = `
         >
           <div
             class="ant-table-content"
-            style="overflow-x:scroll"
+            style="overflow-x:scroll;overflow-y:hidden"
           >
             <table
               style="width:1300px;min-width:100%;table-layout:fixed"
@@ -9547,7 +9544,7 @@ exports[`renders ./components/table/demo/multiple-sorter.md correctly 1`] = `
 
 exports[`renders ./components/table/demo/nested-table.md correctly 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="ant-table-wrapper components-table-demo-nested"
 >
   <div
     class="ant-spin-nested-loading"
@@ -9556,7 +9553,7 @@ exports[`renders ./components/table/demo/nested-table.md correctly 1`] = `
       class="ant-spin-container"
     >
       <div
-        class="ant-table components-table-demo-nested"
+        class="ant-table"
       >
         <div
           class="ant-table-container"
@@ -12791,7 +12788,7 @@ exports[`renders ./components/table/demo/summary.md correctly 1`] = `
 
 exports[`renders ./components/table/demo/virtual-list.md correctly 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="ant-table-wrapper virtual-table"
 >
   <div
     class="ant-spin-nested-loading"
@@ -12800,7 +12797,7 @@ exports[`renders ./components/table/demo/virtual-list.md correctly 1`] = `
       class="ant-spin-container"
     >
       <div
-        class="ant-table virtual-table ant-table-fixed-header ant-table-fixed-column"
+        class="ant-table ant-table-fixed-header ant-table-fixed-column"
       >
         <div
           class="ant-table-container"
